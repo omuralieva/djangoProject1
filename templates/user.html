@@ -6,7 +6,9 @@
 </head>
 <body>
 {% for i in comments %}
-<h2>{{ i.text }} {{ i.created_at.date }}</h2>
+<h2>{{ i.text }}</h2>
+    <h4>{{ i.created_at.date }}</h4>
+    <hr>
 {% endfor %}
 </body>
 </html>
