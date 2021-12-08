@@ -25,3 +25,20 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.last_name}'
+
+
+class User(models.Model):
+    login = models.CharField(max_length=20, verbose_name='Логин')
+    name = models.CharField(max_length=20, verbose_name='Имя')
+
+    def __str__(self):
+        return self.name
+
+
+class Comment(models.Model):
+    text = models.TextField(verbose_name="Комментарий")
+    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(to='User', on_delete=models.CASCADE, verbose_name='Пользователь', null=True)
+
+    def __str__(self):
+        return self.text

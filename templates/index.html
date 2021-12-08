@@ -12,5 +12,9 @@
 {% for i in authors %}
     <h2><a href="{% url 'author' pk=i.id %}">{{ i.last_name }}</a></h2>
 {% endfor %}
+<hr>
+{% for i in users %}
+    <h2><a href="{% url 'user' pk=i.id %}">{{ i.name }}</a></h2>
+{% endfor %}
 </body>
 </html>
