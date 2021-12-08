@@ -20,7 +20,7 @@ from blog.views import index, category, author
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('<int:pk>', category, name='category'),
-    path('<int:pk>', author, name='author'),
+    path('category/<int:pk>', category, name='category'),
+    path('author/<int:pk>', author, name='author'),
 
 ]
