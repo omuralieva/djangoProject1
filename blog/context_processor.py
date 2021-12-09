@@ -1,10 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
 
-from blog.models import Category, Post, Author, Comment, User
+from blog.models import Category, Author, User, Comment
 
 
-def index(request):
+def asd(request):
     categories = Category.objects.all()
     authors = Author.objects.all()
     users = User.objects.all()
@@ -23,19 +22,4 @@ def index(request):
 
     params = {'categories': categories, 'fan': category_fan, 'authors': authors,
               'users': usr}
-    return render(request, 'index.html', params)
-
-
-def category(request, pk):
-    posts = Post.objects.filter(category_id=pk)
-    return render(request, 'category.html', locals())
-
-
-def author(request, pk):
-    posts = Post.objects.filter(author_id=pk)
-    return render(request, 'author.html', locals())
-
-
-def user(request, pk):
-    comments = Comment.objects.filter(user_id=pk)
-    return render(request, 'user.html', locals())
+    return params

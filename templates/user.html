@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for i in comments %}
-<h2>{{ i.text }}</h2>
-    <h4>{{ i.created_at.date }}</h4>
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for i in comments %}
+        <div class="card">
+            <div class="card-body">
+                <h2>{{ i.text }}</h2>
+                <h6>{{ i.created_at.date }}</h6>
+            </div>
+        </div>
+    {% endfor %}
     <hr>
-{% endfor %}
-</body>
-</html>
+
+{% endblock %}
