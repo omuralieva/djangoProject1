@@ -13,6 +13,23 @@ class Post(models.Model):
         return self.title
 
 
+class Ad(models.Model):
+    class Meta:
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Объявления'
+
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+    image = models.ImageField(upload_to='ads/', verbose_name='Главное изображение')
+    user = models.ForeignKey(to='CustomUser', on_delete=models.CASCADE, verbose_name='Пользователь')
+    created_at = models.DateTimeField(auto_now_add=True)
+    moderated = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+
 class Category(models.Model):
     title = models.CharField(max_length=255, verbose_name='Заголовок')
 

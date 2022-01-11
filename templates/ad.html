@@ -1,21 +1,11 @@
 {% extends 'base.html' %}
 
-    <meta charset="UTF-8">
-    <title>Объявления</title>
 {% block content %}
-<body>
-<div class="card" style="width: 40rem;">
-    <img src="https://all-auto.org/uploads/posts/2015-09/1443535311_ferrari-laferrari-5.jpg" class="card-img-top"
-         alt="...">
-    <form>
-        <div class="card-body">
-            <h5 class="card-title">Заголовок</h5>
-            <p class="card-text">какое-то описание</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">0550 36 55 55</li>
-        </ul>
+    {% if user.is_authenticated  %}
+    <form method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Создать"></p>
     </form>
-</div>
-
+    {% endif %}
 {% endblock %}

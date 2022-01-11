@@ -1,5 +1,8 @@
+from django.http import HttpResponse
 from django.shortcuts import render
-from blog.models import Category, Post, Author, Comment, CustomUser
+
+from blog.forms import AdForm
+from blog.models import Category, Post, Author, Comment, CustomUser, Ad
 
 
 def index(request):
@@ -32,3 +35,29 @@ def author(request, pk):
 def user(request, pk):
     comments = Comment.objects.filter(user_id=pk)
     return render(request, 'user.html', locals())
+
+
+def create_ad(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AdForm(request.POST, request.FILES)
+            if form.is_valid():
+                cd = form.cleaned_data
+                Ad.objects.create(title=cd['title'], description=cd['description'], image=cd['image'],
+                                  user=request.user)
+                return HttpResponse('Объявление успешно создано!')
+        else:
+            form = AdForm()
+    else:
+        return HttpResponse('Вы не авторизованы')
+    return render(request, 'ad.html', {'form': form})
+
+
+def advert(request):
+    adverts = Ad.objects.all().order_by('-title')
+    return render(request, 'advert.html', {'adverts': adverts})
+
+
+def ad_detail(request, pk):
+    ad = Ad.objects.get(pk=pk)
+    return render(request, 'ad_detail.html', {'advert': ad})

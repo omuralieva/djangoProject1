@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from blog.models import Post, Author, Category, CustomUser, Comment
+from blog.models import Post, Author, Category, CustomUser, Comment, Ad
 
 
 @admin.register(CustomUser)
@@ -21,3 +21,4 @@ admin.site.register(Post)
 admin.site.register(Author)
 admin.site.register(Category)
 admin.site.register(Comment)
+admin.site.register(Ad)
