@@ -3,6 +3,12 @@
 <title>Объявления</title>
 {% block content %}
     {% csrf_token %}
+    <div>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'ad_list' %}">
+            <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search"
+                   name="query">
+        </form>
+    </div>
     {% for advert in adverts %}
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
@@ -20,6 +26,8 @@
                 </div>
             </div>
         </div>
+
+
     {% endfor %}
 {% endblock %}
 

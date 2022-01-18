@@ -53,9 +53,13 @@ def create_ad(request):
     return render(request, 'ad.html', {'form': form})
 
 
-def advert(request):
-    adverts = Ad.objects.all().order_by('-title')
-    return render(request, 'advert.html', {'adverts': adverts})
+def ad_list(request):
+    search_query = request.GET.get('query', '')
+    if search_query:
+        adverts = Ad.objects.filter(title__icontains=search_query)
+    else:
+        adverts = Ad.objects.all()
+    return render(request, 'ad_list.html', {'adverts': adverts})
 
 
 def ad_detail(request, pk):

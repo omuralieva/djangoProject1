@@ -12,3 +12,7 @@ class AdForm(forms.ModelForm):
     class Meta:
         model = Ad
         exclude = ['user', 'created_at', 'moderated', 'is_active']
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()

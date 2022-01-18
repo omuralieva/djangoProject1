@@ -17,6 +17,7 @@ class Ad(models.Model):
     class Meta:
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
+        ordering = ['-created_at']
 
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
@@ -46,6 +47,7 @@ class Author(models.Model):
 
 
 class CustomUser(AbstractUser):
+    is_email_verified = models.BooleanField(default=False)
     is_premium = models.BooleanField(default=False)
 
     def __str__(self):

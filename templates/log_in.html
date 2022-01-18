@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container">
     <main class="form-login">
-        <form method="post">
-            {% csrf_token %}
+        <form method="post">{% csrf_token %}
+            {% include 'messages.html' %}
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
