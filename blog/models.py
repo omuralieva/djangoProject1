@@ -1,4 +1,8 @@
+from tempfile import NamedTemporaryFile
+from urllib.request import urlopen
+
 from django.contrib.auth.models import AbstractUser
+from django.core.files import File
 from django.db import models
 
 
@@ -29,6 +33,14 @@ class Ad(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_remote_image(self, url):
+        if not self.image:
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(url).read())
+            img_temp.flush()
+            self.image.save(f"image_{self.pk}.jpeg", File(img_temp))
+        self.save()
 
 
 class Category(models.Model):

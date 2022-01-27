@@ -2,6 +2,8 @@
 <meta charset="UTF-8">
 <title>Объявления</title>
 {% block content %}
+
+    {% load static %}
     {% csrf_token %}
     <div>
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'ad_list' %}">

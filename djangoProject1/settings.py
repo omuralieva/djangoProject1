@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 import sys
 from pathlib import Path
 
@@ -125,9 +126,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'blog.CustomUser'
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
-EMAIL_FROM_USER = 'projectdjango1@gmail.com'
+EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'  # Например, smtp.gmail.com
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'projectdjango1@gmail.com'
-EMAIL_HOST_PASSWORD = "123456project"
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

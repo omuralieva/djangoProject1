@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.urls import path
 
 from blog.registration import log_in, registration, activate_user
-from blog.views import index, category, author, user, create_ad, ad_list, ad_detail
+from blog.views import index, category, author, user, create_ad, ad_list, ad_detail, read_csv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('ad-list/', ad_list, name='ad_list'),
     path('ad-detail/<int:pk>', ad_detail, name='ad_detail'),
     path('activate/<uid64>/<token>', activate_user, name='activate'),
+    path('readcsv', read_csv, name='parser'),
 
 
 

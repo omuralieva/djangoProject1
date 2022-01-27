@@ -1,5 +1,9 @@
+import csv
+
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
+
 
 from blog.forms import AdForm
 from blog.models import Category, Post, Author, Comment, CustomUser, Ad
@@ -65,3 +69,20 @@ def ad_list(request):
 def ad_detail(request, pk):
     ad = Ad.objects.get(pk=pk)
     return render(request, 'ad_detail.html', {'advert': ad})
+
+
+def read_csv(request):
+    file = str(settings.BASE_DIR) + r'/blog/parser/ads.csv'
+    with open(file, 'r', encoding='utf-8') as f:
+        for i in csv.reader(f):
+            if i:
+                title = i[0]
+                desc = i[3]
+                image = i[4]
+                user_id = 1
+                ad = Ad.objects.filter(title=title).exists()
+                if not ad:
+                    ad = Ad.objects.create(title=title, description=desc, user_id=user_id)
+                    if image:
+                        ad.get_remote_image(image)
+    return HttpResponse('Успешно!')
