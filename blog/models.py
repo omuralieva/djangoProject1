@@ -27,7 +27,7 @@ class Ad(models.Model):
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to='ads/', verbose_name='Главное изображение')
     user = models.ForeignKey(to='CustomUser', on_delete=models.CASCADE, verbose_name='Пользователь')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
     moderated = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
