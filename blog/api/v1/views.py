@@ -96,16 +96,19 @@ class CustomUserRegisterView(views.APIView):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            message = render_to_string('activate.html', {
+            email_subject = 'Активируйте свой аккаунт'
+            email_body = render_to_string('activate.html', {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': generate_token.make_token(user),
-
+                'token': generate_token.make_token(user)
             })
             to_email = serializer.data['email']
-            email = EmailMessage(message, to=[to_email])
-            email.send(settings.EMAIL_FROM_USER)
+            email = EmailMessage(subject=email_subject, body=email_body,
+                                 from_email=settings.EMAIL_FROM_USER,
+                                 to=[to_email]
+                                 )
+            email.send()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

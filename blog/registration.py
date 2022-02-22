@@ -36,10 +36,9 @@ def activation_email(user, request):
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': generate_token.make_token(user)
     })
-
     email = EmailMessage(subject=email_subject, body=email_body,
                          from_email=settings.EMAIL_FROM_USER,
-                         to=[user.email]
+                         to=[user.to_email]
                          )
 
     if not settings.TESTING:
