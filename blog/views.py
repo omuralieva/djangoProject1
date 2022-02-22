@@ -2,8 +2,8 @@ import csv
 
 from django.conf import settings
 from django.http import HttpResponse
-from django.shortcuts import render
-
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
 
 from blog.forms import AdForm
 from blog.models import Category, Post, Author, Comment, CustomUser, Ad
@@ -86,3 +86,18 @@ def read_csv(request):
                     if image:
                         ad.get_remote_image(image)
     return HttpResponse('Успешно!')
+
+
+# class CustomUserDetailView(DetailView):
+#
+#     context_object_name = 'user'
+#     queryset = CustomUser.objects.all()
+
+
+class AdUserListView(ListView):
+    template_name = 'ad_list.html'
+    context_object_name = 'adverts'
+
+    def get_queryset(self):
+        self.user = get_object_or_404(CustomUser, name=self.kwargs['pk'])
+        return Ad.objects.filter(user=self.user)

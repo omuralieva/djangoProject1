@@ -28,7 +28,9 @@
                 </div>
             </div>
         </div>
-
+{% for i in users %}
+    <h1>{{ i.user }}<h1>
+    {% endfor %}
 
     {% endfor %}
 {% endblock %}
