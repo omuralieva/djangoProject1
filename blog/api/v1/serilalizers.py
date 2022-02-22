@@ -37,7 +37,7 @@ class CustomUserRegisterSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['username', 'email', 'password', 'password2']
 
-    def save(self,**kwargs):
+    def save(self, **kwargs):
         user = CustomUser(username=self.validated_data['username'],
                           email=self.validated_data['email'],
                           )

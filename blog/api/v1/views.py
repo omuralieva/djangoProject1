@@ -77,6 +77,9 @@ class CustomUserLoginView(ObtainAuthToken):
         token = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
 
+    def get(self, token):
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+
 
 class CustomUserRegisterView(views.APIView):
 
