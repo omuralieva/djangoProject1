@@ -30,7 +30,7 @@ class AdSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"error": 'price is not valid'})
 
 
-class CustomUserRegisterSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
 
     class Meta:
@@ -45,8 +45,11 @@ class CustomUserRegisterSerializer(serializers.ModelSerializer):
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
 
+        if len(password) < 6:
+            raise ValidationError('Password should be at least 6 characters')
+
         if password != password2:
-            raise ValidationError('password didnt exist')
+            raise ValidationError('password mismatch')
 
         user.set_password(password)
         user.save()

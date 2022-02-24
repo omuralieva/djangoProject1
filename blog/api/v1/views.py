@@ -14,7 +14,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND
 
-from blog.api.v1.serilalizers import AdSerializer, CustomUserRegisterSerializer
+from blog.api.v1.serilalizers import AdSerializer, CustomUserSerializer
 from blog.models import Ad, CustomUser
 from blog.api.v1.utils import generate_token
 
@@ -68,16 +68,20 @@ def get_list_ads(request, *args, **kwargs):
 
 
 class CustomUserLoginView(ObtainAuthToken):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        if not serializer.is_valid():
-            return Response({'User': 'not found'})
-        user = serializer.validated_data['user']
-        token = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
+        data = request.data
+        try:
+            user = CustomUser.objects.get(email=data['email'])
+            if user:
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({'token': token.key if token else created.key})
+        except:
+            return Response({'Error': 'Убедитесь в правильности данных'})
 
-    def get(self, token):
+    def get(self, token, **kwargs):
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
 
 
@@ -93,8 +97,8 @@ class CustomUserRegisterView(views.APIView):
         }})
 
     def post(self, request, *args, **kwargs):
-        serializer = CustomUserRegisterSerializer(data=request.data)
-        if serializer.is_valid():
+        serializer = CustomUserSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             user.is_active = False
             user.save()
@@ -115,7 +119,6 @@ class CustomUserRegisterView(views.APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 def activation_user(request, uidb64, token):
     try:

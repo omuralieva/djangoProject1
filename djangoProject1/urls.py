@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.urls import path
 
 from blog.api.v1.views import ListCreateAdView, RetrieveUpdateDestroyAdView, CustomUserRegisterView, \
-    CustomUserLoginView, activation_user
+    CustomUserLoginView
 from blog.registration import log_in, registration, activate_user
 from blog.views import index, category, author, user, create_ad, ad_detail, read_csv, AdUserListView, ad_list
 
@@ -28,7 +28,6 @@ urlpatterns = [
     path('api/v1/get-ad/<int:pk>/', RetrieveUpdateDestroyAdView.as_view(), name='get_rud'),
     path('api/v1/register/', CustomUserRegisterView.as_view(), name='registration'),
     path('api/v1/login/', CustomUserLoginView.as_view(), name='login'),
-    path('api/v1/activate/<uid64>/<token>', activation_user, name='activation'),
 
 
 
